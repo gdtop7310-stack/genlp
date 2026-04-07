@@ -1,997 +1,978 @@
+<!--
+aesthetic_dna: Cyberpunk/Neo-Tokyo Luxury Meets High-Tech Minimalist Studio
+ui_paradigm: Immersive Scrollytelling & 3D Spatial Bento Layout
+palette_choice: Deep Space Void (#030509) with Electric Cyan (#00F0FF), Neon Violet (#8A2BE2), and Crimson (#FF003C) accents.
+-->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>広告収益20万円以上を目指す | Masayume AI動画戦略</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== RESET & BASE ===== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Noto Sans JP', 'Inter', sans-serif;
-      background: #080808;
-      color: #e8e8e8;
-      line-height: 1.7;
-      overflow-x: hidden;
-      max-width: 480px;
-      margin: 0 auto;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Architect | 月収20万円のYouTube覇道</title>
 
-    /* ===== NOISE TEXTURE ===== */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    /* ===== UTILITY ===== */
-    .container { position: relative; z-index: 1; padding: 0 20px; }
-    .tag {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      border: 1px solid #555;
-      padding: 4px 10px;
-      color: #999;
-      margin-bottom: 16px;
-    }
-    .section-divider {
-      width: 40px;
-      height: 1px;
-      background: #333;
-      margin: 0 auto 32px;
-    }
-    .fade-in {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    /* ===== HEADER ===== */
-    header {
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #1a1a1a;
-      position: sticky;
-      top: 0;
-      background: rgba(8,8,8,0.95);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-    }
-    .logo {
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .logo span {
-      color: #888;
-      font-weight: 400;
-      font-size: 13px;
-    }
-    .header-cta {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: #fff;
-      background: #fff;
-      color: #000;
-      padding: 8px 14px;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-    }
-    .header-cta:hover { background: #ccc; }
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    /* ===== VIDEO AREA (直下) ===== */
-    .video-section {
-      background: #0e0e0e;
-      border-bottom: 1px solid #1e1e1e;
-    }
-    .video-label {
-      padding: 14px 20px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #666;
-    }
-    .video-label span {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: #fff;
-      border-radius: 50%;
-      margin-right: 8px;
-      vertical-align: middle;
-      animation: blink 1.4s infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      background: #111;
-    }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-    }
-    /* プレースホルダー表示（動画URL未設定時） */
-    .video-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: #111;
-      border: 1px dashed #2a2a2a;
-      color: #444;
-      font-size: 13px;
-      text-align: center;
-      gap: 12px;
-    }
-    .video-placeholder svg {
-      width: 48px;
-      height: 48px;
-      opacity: 0.3;
-    }
-    .video-placeholder p { font-size: 11px; letter-spacing: 0.05em; }
-    .video-caption {
-      padding: 10px 20px 16px;
-      font-size: 11px;
-      color: #555;
-      text-align: center;
-      letter-spacing: 0.04em;
-    }
-
-    /* ===== HERO ===== */
-    .hero {
-      padding: 52px 20px 48px;
-      text-align: center;
-      position: relative;
-      border-bottom: 1px solid #151515;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.03), transparent);
-      pointer-events: none;
-    }
-    .hero-eyebrow {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #666;
-      margin-bottom: 20px;
-    }
-    .hero-title {
-      font-size: clamp(26px, 5.5vw, 30px);
-      font-weight: 900;
-      line-height: 1.35;
-      color: #fff;
-      margin-bottom: 20px;
-      letter-spacing: -0.01em;
-    }
-    .hero-title .accent {
-      display: inline;
-      font-size: clamp(28px, 6vw, 34px);
-      color: #fff;
-      border-bottom: 2px solid #fff;
-      padding-bottom: 2px;
-    }
-    .hero-subtitle {
-      font-size: 13px;
-      color: #888;
-      line-height: 1.8;
-      margin-bottom: 32px;
-      font-weight: 300;
-    }
-    .hero-cta {
-      display: block;
-      background: #fff;
-      color: #000;
-      font-weight: 900;
-      font-size: 15px;
-      letter-spacing: 0.04em;
-      padding: 18px 24px;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      width: 100%;
-      text-align: center;
-    }
-    .hero-cta:hover { background: #ddd; transform: translateY(-1px); }
-    .hero-cta-sub {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #555;
-      letter-spacing: 0.04em;
-    }
-
-    /* ===== STATS ===== */
-    .stats-section {
-      padding: 36px 20px;
-      border-bottom: 1px solid #151515;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: #1a1a1a;
-    }
-    .stat-item {
-      background: #080808;
-      padding: 20px 10px;
-      text-align: center;
-    }
-    .stat-num {
-      font-size: 26px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-label {
-      font-size: 10px;
-      color: #666;
-      letter-spacing: 0.06em;
-    }
-
-    /* ===== PROBLEM ===== */
-    .problem-section {
-      padding: 52px 20px;
-      border-bottom: 1px solid #151515;
-    }
-    .section-title {
-      font-size: 22px;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.35;
-      margin-bottom: 24px;
-      letter-spacing: -0.01em;
-    }
-    .checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .checklist li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 13px;
-      color: #aaa;
-      line-height: 1.6;
-      padding: 14px 16px;
-      background: #111;
-      border-left: 2px solid #2a2a2a;
-    }
-    .checklist li::before {
-      content: '—';
-      color: #555;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .problem-note {
-      margin-top: 24px;
-      padding: 16px;
-      border: 1px solid #2a2a2a;
-      font-size: 12px;
-      color: #777;
-      line-height: 1.7;
-      font-style: italic;
-    }
-
-    /* ===== CONTENTS ===== */
-    .contents-section {
-      padding: 52px 20px;
-      border-bottom: 1px solid #151515;
-    }
-    .contents-desc {
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 28px;
-      line-height: 1.75;
-    }
-    .timestamp-list { display: flex; flex-direction: column; gap: 2px; }
-    .timestamp-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 14px 0;
-      border-bottom: 1px solid #151515;
-    }
-    .timestamp-item:last-child { border-bottom: none; }
-    .ts-time {
-      font-size: 11px;
-      font-weight: 700;
-      font-family: 'Inter', monospace;
-      color: #666;
-      letter-spacing: 0.04em;
-      flex-shrink: 0;
-      padding-top: 1px;
-      min-width: 54px;
-    }
-    .ts-body { flex: 1; }
-    .ts-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #ddd;
-      margin-bottom: 3px;
-    }
-    .ts-desc { font-size: 11px; color: #666; line-height: 1.5; }
-
-    /* ===== TOOLS ===== */
-    .tools-section {
-      padding: 52px 20px;
-      border-bottom: 1px solid #151515;
-      background: #0a0a0a;
-    }
-    .tools-intro {
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 28px;
-      line-height: 1.75;
-    }
-    .tool-cards { display: flex; flex-direction: column; gap: 16px; }
-    .tool-card {
-      border: 1px solid #1e1e1e;
-      background: #0e0e0e;
-      overflow: hidden;
-    }
-    .tool-card-img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(100%) contrast(0.85);
-      background: #1a1a1a;
-    }
-    .tool-card-img-placeholder {
-      width: 100%;
-      height: 160px;
-      background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #333;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .tool-card-body { padding: 18px 16px; }
-    .tool-name {
-      font-size: 16px;
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 6px;
-      letter-spacing: 0.02em;
-    }
-    .tool-desc {
-      font-size: 12px;
-      color: #777;
-      line-height: 1.65;
-    }
-    .tool-tag {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 10px;
-      color: #555;
-      border: 1px solid #2a2a2a;
-      padding: 3px 8px;
-      letter-spacing: 0.08em;
-    }
-
-    /* ===== ACTIONS ===== */
-    .actions-section {
-      padding: 52px 20px;
-      border-bottom: 1px solid #151515;
-    }
-    .actions-intro {
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 28px;
-      line-height: 1.75;
-    }
-    .action-list { display: flex; flex-direction: column; gap: 20px; }
-    .action-item {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-    .action-num {
-      font-size: 28px;
-      font-weight: 900;
-      color: #2a2a2a;
-      font-family: 'Inter', sans-serif;
-      flex-shrink: 0;
-      line-height: 1;
-      padding-top: 2px;
-    }
-    .action-body {}
-    .action-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #ddd;
-      margin-bottom: 4px;
-    }
-    .action-desc { font-size: 12px; color: #777; line-height: 1.65; }
-
-    /* ===== MESSAGE ===== */
-    .message-section {
-      padding: 52px 20px;
-      border-bottom: 1px solid #151515;
-      text-align: center;
-    }
-    .message-quote {
-      font-size: 14px;
-      color: #bbb;
-      line-height: 2;
-      font-weight: 300;
-      margin-bottom: 32px;
-      position: relative;
-    }
-    .message-quote::before {
-      content: '—';
-      display: block;
-      font-size: 20px;
-      color: #333;
-      margin-bottom: 16px;
-    }
-    .profile-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px;
-      border: 1px solid #1e1e1e;
-      background: #0e0e0e;
-      text-align: left;
-    }
-    .profile-icon {
-      width: 48px;
-      height: 48px;
-      background: #222;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .profile-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; }
-    .profile-bio { font-size: 11px; color: #666; line-height: 1.5; }
-
-    /* ===== CTA SECTION ===== */
-    .cta-section {
-      padding: 60px 20px;
-      text-align: center;
-      background: #0a0a0a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    .cta-eyebrow {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #555;
-      margin-bottom: 16px;
-    }
-    .cta-title {
-      font-size: 26px;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.3;
-      margin-bottom: 12px;
-      letter-spacing: -0.01em;
-    }
-    .cta-subtitle {
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 32px;
-      line-height: 1.75;
-    }
-    .cta-benefits {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 32px;
-      text-align: left;
-    }
-    .cta-benefits li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: #aaa;
-      padding: 10px 14px;
-      background: #111;
-      border-left: 2px solid #333;
-    }
-    .cta-benefits li::before {
-      content: '✓';
-      color: #888;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .cta-main-btn {
-      display: block;
-      background: #fff;
-      color: #000;
-      font-weight: 900;
-      font-size: 16px;
-      letter-spacing: 0.03em;
-      padding: 20px 24px;
-      text-decoration: none;
-      width: 100%;
-      text-align: center;
-      transition: background 0.2s, transform 0.15s;
-      margin-bottom: 10px;
-    }
-    .cta-main-btn:hover { background: #ccc; transform: translateY(-1px); }
-    .cta-note {
-      font-size: 11px;
-      color: #444;
-      letter-spacing: 0.04em;
-    }
-
-    /* ===== FAQ ===== */
-    .faq-section {
-      padding: 52px 20px;
-      border-bottom: 1px solid #151515;
-    }
-    .faq-list { display: flex; flex-direction: column; gap: 1px; background: #151515; }
-    .faq-item { background: #080808; }
-    .faq-question {
-      padding: 16px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #ccc;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-    }
-    .faq-question::after {
-      content: '+';
-      font-size: 18px;
-      color: #555;
-      font-weight: 300;
-      transition: transform 0.25s;
-      flex-shrink: 0;
-    }
-    .faq-item.open .faq-question::after { transform: rotate(45deg); }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding 0.2s;
-      font-size: 12px;
-      color: #777;
-      line-height: 1.75;
-    }
-    .faq-item.open .faq-answer {
-      max-height: 400px;
-      padding: 0 16px 16px;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      padding: 32px 20px;
-      text-align: center;
-      border-top: 1px solid #151515;
-    }
-    .footer-logo { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 8px; letter-spacing: 0.08em; }
-    .footer-copy { font-size: 11px; color: #333; letter-spacing: 0.04em; }
-
-    /* ===== FLOATING CTA BAR ===== */
-    .floating-bar {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%) translateY(100%);
-      width: 100%;
-      max-width: 480px;
-      background: rgba(10,10,10,0.96);
-      border-top: 1px solid #2a2a2a;
-      backdrop-filter: blur(12px);
-      padding: 12px 16px;
-      z-index: 200;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .floating-bar.show { transform: translateX(-50%) translateY(0); }
-    .floating-bar-text {
-      flex: 1;
-      font-size: 11px;
-      color: #888;
-      line-height: 1.4;
-    }
-    .floating-bar-text strong { color: #fff; display: block; font-size: 12px; }
-    .floating-bar-btn {
-      background: #fff;
-      color: #000;
-      font-size: 12px;
-      font-weight: 900;
-      padding: 10px 16px;
-      text-decoration: none;
-      flex-shrink: 0;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-    }
-
-    /* ===== GRID DECORATION ===== */
-    .grid-overlay {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="logo">MASAYUME<span> / AI動画</span></div>
-    <a href="https://utage-system.com/event/VDIkmJHPe0fO/register" target="_blank" class="header-cta">個別相談を申し込む</a>
-  </header>
-
-  <!-- VIDEO AREA (ヘッダー直下) -->
-  <section class="video-section">
-    <div class="video-label">
-      <span></span>動画を今すぐ見る
-    </div>
-    <div class="video-wrapper">
-      <iframe
-        src="https://www.youtube.com/embed/Y-XJdasYCVg?rel=0&modestbranding=1"
-        allowfullscreen
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        title="AIツールの進化 × 再生数の増やし方 | Masayume"
-      ></iframe>
-    </div>
-    <div class="video-caption">AIツールの進化 × 再生数を増やす3つのアクション（約10分）</div>
-  </section>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="grid-overlay"></div>
-    <p class="hero-eyebrow fade-in">For AI Video Creators — 中級停滞を突破</p>
-    <h1 class="hero-title fade-in">
-      なぜあなたの動画は<br />
-      <span class="accent">伸び止まっているのか</span>
-    </h1>
-    <p class="hero-subtitle fade-in">
-      動画を量産しても再生数が増えない。<br />
-      ツールを使いこなしているのに収益が変わらない。<br />
-      そのループを抜け出す方法が、この動画にあります。
-    </p>
-    <a href="https://utage-system.com/event/VDIkmJHPe0fO/register" target="_blank" class="hero-cta fade-in">
-      YouTubeで広告収益20万円以上を目指す<br />
-      <small style="font-weight:400;font-size:12px;opacity:0.7;display:block;margin-top:4px;">個別相談を申し込む →</small>
-    </a>
-    <p class="hero-cta-sub fade-in">まずは動画を見てから → 上にスクロール</p>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats-section fade-in">
-    <div class="stat-item">
-      <div class="stat-num">3×</div>
-      <div class="stat-label">再生数の変化</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">−60%</div>
-      <div class="stat-label">制作コスト</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">10分</div>
-      <div class="stat-label">動画で完全解説</div>
-    </div>
-  </div>
-
-  <!-- PROBLEM -->
-  <section class="problem-section">
-    <div class="tag">The Problem</div>
-    <h2 class="section-title fade-in">
-      中級クリエイターが<br />陥りがちな「罠」
-    </h2>
-    <ul class="checklist fade-in">
-      <li>毎週動画を出しているのに再生数が横ばい</li>
-      <li>AIツールは使っているが、どれが本当に効くかわからない</li>
-      <li>サムネや構成を変えたが変化を感じられない</li>
-      <li>量を増やすほど疲弊して質が落ちている気がする</li>
-      <li>他のクリエイターが伸びている理由がわからない</li>
-      <li>収益化はできているのに「20万円の壁」を超えられない</li>
-    </ul>
-    <div class="problem-note fade-in">
-      「量より質」とわかっていても、どう質を上げるかが見えていない。<br/>
-      この動画では、その「見えない部分」を具体的に解説します。
-    </div>
-  </section>
-
-  <!-- CONTENTS -->
-  <section class="contents-section">
-    <div class="tag">Contents</div>
-    <h2 class="section-title fade-in">この動画でわかること</h2>
-    <p class="contents-desc fade-in">
-      約10分のドキュメンタリースタイルで、中級層が壁を突破するための
-      実践的なフレームワークを解説しています。
-    </p>
-    <div class="timestamp-list fade-in">
-      <div class="timestamp-item">
-        <div class="ts-time">0:00</div>
-        <div class="ts-body">
-          <div class="ts-title">オープニング・収益報告</div>
-          <div class="ts-desc">実際の収益推移とここまでの変化</div>
-        </div>
-      </div>
-      <div class="timestamp-item">
-        <div class="ts-time">1:00</div>
-        <div class="ts-body">
-          <div class="ts-title">量から質への転換点</div>
-          <div class="ts-desc">なぜ量産戦略が中級で頭打ちになるのか</div>
-        </div>
-      </div>
-      <div class="timestamp-item">
-        <div class="ts-time">3:00</div>
-        <div class="ts-body">
-          <div class="ts-title">進化する3つのAIツール</div>
-          <div class="ts-desc">FLOVA / Kling AI / Nano Banana Pro の使い方と実例</div>
-        </div>
-      </div>
-      <div class="timestamp-item">
-        <div class="ts-time">6:30</div>
-        <div class="ts-body">
-          <div class="ts-title">再生数を増やす3つのアクション</div>
-          <div class="ts-desc">キャラクター一貫性・SEO設計・横動画資産の活用</div>
-        </div>
-      </div>
-      <div class="timestamp-item">
-        <div class="ts-time">8:30</div>
-        <div class="ts-body">
-          <div class="ts-title">伸び悩むクリエイターへのメッセージ</div>
-          <div class="ts-desc">諦めかけている人に届けたいこと</div>
-        </div>
-      </div>
-      <div class="timestamp-item">
-        <div class="ts-time">9:30</div>
-        <div class="ts-body">
-          <div class="ts-title">クロージング・次のアクション</div>
-          <div class="ts-desc">動画後にすべきたった一つのこと</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOOLS -->
-  <section class="tools-section">
-    <div class="tag">AI Tools</div>
-    <h2 class="section-title fade-in">今すぐ使える<br />3つのAIツール</h2>
-    <p class="tools-intro fade-in">
-      いずれも「ツールを持っているだけ」では伸びません。
-      この動画では使い方と組み合わせ方まで解説しています。
-    </p>
-    <div class="tool-cards">
-      <div class="tool-card fade-in">
-        <div class="tool-card-img-placeholder">FLOVA</div>
-        <div class="tool-card-body">
-          <div class="tool-name">FLOVA</div>
-          <div class="tool-desc">
-            AIビデオエージェントとして動画制作のワークフロー全体を自動化。
-            台本から映像生成・編集まで一気通貫で行える新世代ツール。
-          </div>
-          <span class="tool-tag">AI Video Agent</span>
-        </div>
-      </div>
-      <div class="tool-card fade-in">
-        <div class="tool-card-img-placeholder">KLING AI</div>
-        <div class="tool-card-body">
-          <div class="tool-name">Kling AI</div>
-          <div class="tool-desc">
-            高品質なAI動画生成ツール。リアルな映像表現と
-            キャラクター一貫性を保ったまま、短時間で動画を量産できる。
-          </div>
-          <span class="tool-tag">AI Video Generator</span>
-        </div>
-      </div>
-      <div class="tool-card fade-in">
-        <div class="tool-card-img-placeholder">NANO BANANA PRO</div>
-        <div class="tool-card-body">
-          <div class="tool-name">Nano Banana Pro</div>
-          <div class="tool-desc">
-            Higgsfield × Google開発の最先端画像生成モデル。
-            細部まで精緻な画作りと、インペイント機能で編集の質を一段上げる。
-          </div>
-          <span class="tool-tag">AI Image Model</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ACTIONS -->
-  <section class="actions-section">
-    <div class="tag">3 Actions</div>
-    <h2 class="section-title fade-in">再生数を増やす<br />3つの具体的アクション</h2>
-    <p class="actions-intro fade-in">
-      ツールを知っているだけでは不十分。
-      どう使い、何を変えれば数字が動くか、が大切です。
-    </p>
-    <div class="action-list">
-      <div class="action-item fade-in">
-        <div class="action-num">01</div>
-        <div class="action-body">
-          <div class="action-title">キャラクター一貫性を担保する</div>
-          <div class="action-desc">
-            ブランドの「顔」を統一することで、視聴者のリピート率と
-            認知速度が大幅に向上する。AIでの実践方法を解説。
-          </div>
-        </div>
-      </div>
-      <div class="action-item fade-in">
-        <div class="action-num">02</div>
-        <div class="action-body">
-          <div class="action-title">SEOを意識した動画設計</div>
-          <div class="action-desc">
-            検索流入を最大化するタイトル・サムネ・説明文の設計。
-            YouTubeアルゴリズムに「刺さる」構造の作り方。
-          </div>
-        </div>
-      </div>
-      <div class="action-item fade-in">
-        <div class="action-num">03</div>
-        <div class="action-body">
-          <div class="action-title">横動画アセットの横断活用</div>
-          <div class="action-desc">
-            一本の横動画から複数プラットフォームへ展開するための
-            資産設計。制作コストを落としながら露出を増やす手法。
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MESSAGE -->
-  <section class="message-section">
-    <div class="tag">Message</div>
-    <div class="section-divider"></div>
-    <p class="message-quote fade-in">
-      「伸びない」のはあなたの才能の問題ではない。<br/>
-      戦略と、使うべきツールと、<br/>
-      その組み合わせを知らないだけだ。<br/>
-      知ったあとに何をするかが、すべてを決める。
-    </p>
-    <div class="profile-card fade-in">
-      <div class="profile-icon">🎬</div>
-      <div>
-        <div class="profile-name">Masayume</div>
-        <div class="profile-bio">AIクリエイター / YouTube広告収益月20万円以上<br/>中級層の「停滞突破」を専門に発信</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA SECTION -->
-  <section class="cta-section" id="consultation">
-    <p class="cta-eyebrow">Next Step</p>
-    <h2 class="cta-title fade-in">
-      YouTubeで広告収益<br />
-      <span style="font-size:34px;">20万円以上</span><br />
-      を目指す
-    </h2>
-    <p class="cta-subtitle fade-in">
-      動画を見て「やってみたい」と感じたなら、<br/>
-      個別相談でその先の具体的なステップを一緒に設計します。
-    </p>
-    <ul class="cta-benefits fade-in">
-      <li>あなたの現状に合わせたツール選定アドバイス</li>
-      <li>チャンネル分析 × 再生数改善の優先順位づけ</li>
-      <li>収益20万円達成までのロードマップ策定</li>
-      <li>Masayume本人によるマンツーマン対応</li>
-    </ul>
-    <a href="https://utage-system.com/event/VDIkmJHPe0fO/register" target="_blank" class="cta-main-btn fade-in" id="consultationBtn">
-      個別相談を申し込む →
-    </a>
-    <p class="cta-note fade-in">
-      ※ 動画をご覧いただいた方限定の相談枠です
-    </p>
-  </section>
-
-  <!-- FAQ -->
-  <section class="faq-section">
-    <div class="tag">FAQ</div>
-    <h2 class="section-title fade-in">よくある質問</h2>
-    <div class="faq-list fade-in">
-      <div class="faq-item">
-        <div class="faq-question">個別相談は無料ですか？</div>
-        <div class="faq-answer">詳細は申し込みページにてご確認いただけます。動画をご覧いただいた方向けに特別な枠を設けています。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question">AIツールを使ったことがない初心者でも大丈夫ですか？</div>
-        <div class="faq-answer">この動画とLPは「中級クリエイターの停滞突破」を主なテーマにしていますが、ツールの基本から理解できる内容になっています。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question">紹介されているAIツールに費用はかかりますか？</div>
-        <div class="faq-answer">FLOVA・Kling AI・Nano Banana Pro はそれぞれ無料プランや試用期間があります。動画内で具体的なプランについても触れています。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question">月20万円の収益はどのくらいの期間で達成できますか？</div>
-        <div class="faq-answer">チャンネルの現状や取り組み量によって異なります。個別相談では、あなたの状況を踏まえた現実的な目標設定を行います。</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">MASAYUME</div>
-    <div class="footer-copy">© 2026 Masayume. All rights reserved.</div>
-  </footer>
-
-  <!-- FLOATING CTA BAR -->
-  <div class="floating-bar" id="floatingBar">
-    <div class="floating-bar-text">
-      <strong>広告収益20万円以上を目指す</strong>
-      個別相談を申し込む
-    </div>
-    <a href="https://utage-system.com/event/VDIkmJHPe0fO/register" target="_blank" class="floating-bar-btn" id="floatingBtn">申し込む →</a>
-  </div>
-
-  <script>
-    // ===== FADE IN ANIMATION =====
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+    <!-- Configuration & Custom Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                    },
+                    colors: {
+                        void: '#030509',
+                        cyan: '#00F0FF',
+                        violet: '#8A2BE2',
+                        crimson: '#FF003C',
+                        surface: 'rgba(255, 255, 255, 0.03)',
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #8A2BE2 0deg, #00F0FF 180deg, #8A2BE2 360deg)',
+                    }
+                }
+            }
         }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    fadeEls.forEach(el => observer.observe(el));
+    </script>
 
-    // ===== FAQ ACCORDION =====
-    document.querySelectorAll('.faq-question').forEach(q => {
-      q.addEventListener('click', () => {
-        const item = q.parentElement;
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
-      });
-    });
+    <style>
+        /* Base & Reset */
+        body {
+            background-color: #030509;
+            color: #F8FAFC;
+            overflow-x: hidden;
+            cursor: none; /* Custom cursor */
+        }
 
-    // ===== FLOATING BAR (show after scrolling past hero) =====
-    const floatingBar = document.getElementById('floatingBar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 600) {
-        floatingBar.classList.add('show');
-      } else {
-        floatingBar.classList.remove('show');
-      }
-    }, { passive: true });
+        ::selection {
+            background: #00F0FF;
+            color: #030509;
+        }
 
-    // ===== CTA CLICK HANDLER =====
-    // URLは設定済み
-  </script>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #030509; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
+
+        /* Typography */
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        }
+        .text-glow { text-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
+        .text-glow-violet { text-shadow: 0 0 20px rgba(138, 43, 226, 0.5); }
+
+        /* Utilities */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-edge {
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes blob-spin {
+            from { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            to { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 7s ease-in-out infinite 2s; }
+        .animate-spin-slow { animation: spin 15s linear infinite; }
+
+        /* Background Blobs */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: blob-spin 20s infinite alternate;
+        }
+
+        /* Hover States for Cards */
+        .bento-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0, 240, 255, 0.15);
+        }
+
+        /* Custom Cursor */
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00F0FF;
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        #cursor-ring {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(0, 240, 255, 0.5);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, transform 0.1s ease-out;
+        }
+
+        .hover-target:hover ~ #cursor-dot {
+            width: 0;
+            height: 0;
+        }
+        .hover-target:hover ~ #cursor-ring {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 240, 255, 0.1);
+            backdrop-filter: blur(2px);
+            border-color: #00F0FF;
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Grid Pattern */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+        }
+
+        /* TV Scanline effect overlay */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.2) 51%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9990;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="antialiased relative">
+
+    <!-- Custom Cursor -->
+    <div id="cursor-dot" class="hidden md:block"></div>
+    <div id="cursor-ring" class="hidden md:block"></div>
+    <div class="scanlines"></div>
+
+    <!-- Background Ambient Effects -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="bg-grid absolute inset-0"></div>
+        <div class="blob bg-violet/20 w-[600px] h-[600px] rounded-full top-[-10%] left-[-10%]"></div>
+        <div class="blob bg-cyan/20 w-[500px] h-[500px] rounded-full bottom-[-10%] right-[-10%] animation-delay-2000"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-void/70 backdrop-blur-md border-b border-white/5 mask-image-linear"></div>
+        <div class="container mx-auto px-6 h-20 flex items-center justify-between relative z-10">
+            <div class="text-2xl font-display font-bold tracking-tighter flex items-center gap-2 hover-target cursor-pointer">
+                <i class="ph-fill ph-infinity text-cyan text-3xl"></i>
+                <span>Masayume AI</span>
+            </div>
+            <nav class="hidden md:flex gap-8 text-sm font-medium text-slate-300">
+                <a href="#features" class="hover:text-cyan transition-colors hover-target relative group">ツール
+                    <span class="absolute -bottom-2 left-0 w-0 h-[2px] bg-cyan transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#workflow" class="hover:text-cyan transition-colors hover-target relative group">ワークフロー
+                    <span class="absolute -bottom-2 left-0 w-0 h-[2px] bg-cyan transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#creator" class="hover:text-cyan transition-colors hover-target relative group">クリエイター
+                    <span class="absolute -bottom-2 left-0 w-0 h-[2px] bg-cyan transition-all group-hover:w-full"></span>
+                </a>
+            </nav>
+            <a href="https://utage-system.com/event/VDIkmJHPe0fO/register" target="_blank" class="hover-target glass-panel px-6 py-2.5 rounded-full text-sm font-bold bg-white/5 border-white/10 hover:bg-cyan/10 hover:border-cyan/50 hover:text-cyan transition-all flex items-center gap-2">
+                <span>相談する</span>
+                <i class="ph ph-arrow-right"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 pb-12 overflow-hidden z-10">
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative">
+
+            <!-- Left Text Content -->
+            <div class="flex flex-col gap-6 relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan/30 bg-cyan/5 w-fit reveal">
+                    <span class="w-2 h-2 rounded-full bg-cyan animate-pulse"></span>
+                    <span class="text-xs font-display text-cyan tracking-wider">SYSTEM ONLINE v2.4</span>
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight reveal" style="transition-delay: 100ms;">
+                    AIが創り出す、<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan via-white to-violet">次世代の収益源。</span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-slate-400 leading-relaxed max-w-lg font-light reveal" style="transition-delay: 200ms;">
+                    顔出し不要。撮影不要。最先端のAIツール群を駆使し、自動化された動画生成プロセスで月収20万円のYoutubeチャンネルを構築する実践的アーキテクチャ。
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 mt-4 reveal" style="transition-delay: 300ms;">
+                    <a href="https://utage-system.com/event/VDIkmJHPe0fO/register" target="_blank" class="hover-target group relative px-8 py-4 bg-white text-void font-bold rounded-lg overflow-hidden flex items-center justify-center gap-2">
+                        <div class="absolute inset-0 bg-gradient-to-r from-cyan to-violet opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <span class="relative z-10 group-hover:text-white transition-colors">システムを導入する</span>
+                        <i class="ph ph-rocket-launch relative z-10 group-hover:text-white transition-colors text-xl"></i>
+                    </a>
+                    <a href="#video" class="hover-target px-8 py-4 glass-panel rounded-lg font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+                        <i class="ph ph-play-circle text-xl text-cyan"></i>
+                        <span>デモを見る</span>
+                    </a>
+                </div>
+
+                <!-- Trust signals -->
+                <div class="flex items-center gap-4 mt-8 pt-8 border-t border-white/10 reveal" style="transition-delay: 400ms;">
+                    <div class="flex -space-x-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="User 1" class="w-10 h-10 rounded-full border-2 border-void object-cover">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="User 2" class="w-10 h-10 rounded-full border-2 border-void object-cover">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="User 3" class="w-10 h-10 rounded-full border-2 border-void object-cover">
+                        <div class="w-10 h-10 rounded-full bg-slate-800 border-2 border-void flex items-center justify-center text-xs font-bold">+200</div>
+                    </div>
+                    <div class="text-sm text-slate-400">
+                        <span class="text-white font-bold">200名</span>のクリエイターが参加
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Video/Visual Content -->
+            <div class="relative w-full aspect-[4/5] md:aspect-square flex items-center justify-center reveal" style="transition-delay: 200ms;">
+                <!-- Decorative Elements -->
+                <div class="absolute inset-0 bg-hero-glow rounded-3xl blur-[100px] opacity-30 animate-pulse-glow pointer-events-none"></div>
+                <div class="absolute top-10 right-10 w-24 h-24 bg-cyan/20 rounded-full blur-2xl animate-float-delayed"></div>
+                <div class="absolute bottom-10 left-10 w-32 h-32 bg-violet/20 rounded-full blur-2xl animate-float"></div>
+
+                <!-- Main Video Container -->
+                <div class="relative w-full max-w-[500px] glass-panel glass-edge rounded-2xl p-2 transform rotate-[2deg] hover:rotate-0 transition-transform duration-700 z-10">
+                    <div class="absolute top-0 right-0 -mt-3 -mr-3 flex gap-2 z-20">
+                        <span class="flex h-3 w-3 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-crimson opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-crimson"></span>
+                        </span>
+                        <div class="bg-black/80 backdrop-blur text-[10px] px-2 py-0.5 rounded text-white font-display border border-white/10 uppercase">Live Render</div>
+                    </div>
+
+                    <!-- Faux Browser/Player Chrome -->
+                    <div class="bg-[#0f172a] rounded-xl overflow-hidden border border-white/5 relative">
+                        <div class="h-8 bg-black/40 flex items-center px-4 gap-2 border-b border-white/5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-white/20"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-white/20"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-white/20"></div>
+                        </div>
+
+                        <!-- Video Embed Placeholder -->
+                        <div class="relative aspect-video bg-black group hover-target overflow-hidden" id="video">
+                            <iframe
+                                src="https://www.youtube.com/embed/Y-XJdasYCVg?rel=0&modestbranding=1"
+                                allowfullscreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                title="AIツールの進化 × 再生数の増やし方 | Masayume"
+                                class="w-full h-full"
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating HUD elements -->
+                <div class="hover-target absolute top-1/4 -left-8 glass-panel py-3 px-4 rounded-xl border border-cyan/20 animate-float z-20 hidden md:flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-cyan/10 flex items-center justify-center border border-cyan/30">
+                        <i class="ph ph-chart-line-up text-cyan text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-slate-400 uppercase tracking-wider font-display">Est. Revenue</div>
+                        <div class="text-white font-display font-bold text-lg">¥196,500</div>
+                    </div>
+                </div>
+
+                <div class="hover-target absolute bottom-1/4 -right-4 glass-panel py-3 px-4 rounded-xl border border-violet/20 animate-float-delayed z-20 hidden md:flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-violet/10 flex items-center justify-center border border-violet/30">
+                        <i class="ph ph-clock text-violet text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-slate-400 uppercase tracking-wider font-display">Generation Time</div>
+                        <div class="text-white font-display font-bold text-lg">4m 12s</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 z-20">
+            <span class="text-[10px] font-display uppercase tracking-[0.2em] text-cyan">Scroll</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-cyan to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Data Density / Stats Section -->
+    <section class="relative py-12 border-y border-white/5 bg-white/[0.02] z-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-white/5">
+                <div class="text-center px-4 reveal">
+                    <div class="text-4xl md:text-5xl font-display font-bold text-white mb-2 tracking-tighter flex justify-center items-baseline gap-1">
+                        <span class="counter" data-target="98">0</span><span class="text-xl text-cyan">%</span>
+                    </div>
+                    <div class="text-sm text-slate-400 font-medium">属人性排除率</div>
+                </div>
+                <div class="text-center px-4 reveal" style="transition-delay: 100ms;">
+                    <div class="text-4xl md:text-5xl font-display font-bold text-white mb-2 tracking-tighter flex justify-center items-baseline gap-1">
+                        <span class="text-2xl">1〜2</span><span class="text-xl text-violet">h</span>
+                    </div>
+                    <div class="text-sm text-slate-400 font-medium">1本あたりの制作時間</div>
+                </div>
+                <div class="text-center px-4 reveal" style="transition-delay: 200ms;">
+                    <div class="text-4xl md:text-5xl font-display font-bold text-white mb-2 tracking-tighter flex justify-center items-baseline gap-1">
+                        <span class="text-xl text-cyan">¥</span><span class="counter" data-target="0">0</span>
+                    </div>
+                    <div class="text-sm text-slate-400 font-medium">初期機材投資</div>
+                </div>
+                <div class="text-center px-4 reveal" style="transition-delay: 300ms;">
+                    <div class="text-4xl md:text-5xl font-display font-bold text-white mb-2 tracking-tighter flex justify-center items-baseline gap-1">
+                        <span class="counter" data-target="20">0</span><span class="text-xl text-violet">万+</span>
+                    </div>
+                    <div class="text-sm text-slate-400 font-medium">目標月間収益 (円)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem / Tension Section -->
+    <section class="relative py-32 z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+
+                <div class="lg:w-1/2 relative reveal">
+                    <div class="text-outline text-8xl md:text-[12rem] font-black absolute -top-10 -left-10 opacity-20 pointer-events-none font-display tracking-tighter">PAST</div>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-8 leading-tight relative z-10">
+                        「動画編集」という<br>
+                        終わりのない<span class="text-crimson">労働</span>。
+                    </h2>
+                    <ul class="space-y-6">
+                        <li class="flex gap-4 items-start glass-panel p-4 rounded-xl border-l-4 border-l-crimson backdrop-blur-sm bg-black/40">
+                            <i class="ph ph-video-camera-slash text-2xl text-crimson mt-1 shrink-0"></i>
+                            <div>
+                                <h3 class="text-lg font-bold text-white mb-1">顔出し・撮影のリスク</h3>
+                                <p class="text-slate-400 text-sm">身バレのリスク、撮影機材やスタジオへの投資、何より「撮影疲れ」が継続を阻害します。</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start glass-panel p-4 rounded-xl border-l-4 border-l-crimson backdrop-blur-sm bg-black/40">
+                            <i class="ph ph-scissors text-2xl text-crimson mt-1 shrink-0"></i>
+                            <div>
+                                <h3 class="text-lg font-bold text-white mb-1">無限に奪われる時間</h3>
+                                <p class="text-slate-400 text-sm">たった10分の動画に数時間のカット編集とテロップ挿入。時給換算すると絶望的な現実。</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start glass-panel p-4 rounded-xl border-l-4 border-l-crimson backdrop-blur-sm bg-black/40">
+                            <i class="ph ph-users text-2xl text-crimson mt-1 shrink-0"></i>
+                            <div>
+                                <h3 class="text-lg font-bold text-white mb-1">外注化による利益圧迫</h3>
+                                <p class="text-slate-400 text-sm">編集を外注すれば利益は飛び、ディレクションの手間が増えるジレンマ。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lg:w-1/2 flex flex-col justify-center reveal" style="transition-delay: 200ms;">
+                    <div class="glass-panel p-8 md:p-12 rounded-3xl border-cyan/30 relative overflow-hidden group">
+                        <!-- Abstract bg light -->
+                        <div class="absolute -top-20 -right-20 w-64 h-64 bg-cyan/20 rounded-full blur-3xl group-hover:bg-cyan/30 transition-colors duration-500"></div>
+
+                        <div class="relative z-10">
+                            <div class="inline-flex items-center gap-2 text-cyan font-display font-bold tracking-widest text-sm mb-4">
+                                <i class="ph-fill ph-check-circle"></i>
+                                SOLUTION
+                            </div>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                                AIが全てを代替する。<br>
+                                あなたは<span class="text-glow">「指示」</span>を出すだけ。
+                            </h2>
+                            <p class="text-slate-300 leading-relaxed mb-8">
+                                属人的なスキルは一切不要。複数の特化型AIを連結させた当社独自のコンパウンド・ワークフローにより、企画、台本、映像生成、音声合成、編集までをシームレスに自動化します。
+                            </p>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-black/50 p-4 rounded-lg border border-white/5 flex items-center gap-3">
+                                    <i class="ph ph-robot text-cyan text-xl"></i>
+                                    <span class="text-sm font-bold">完全自動生成</span>
+                                </div>
+                                <div class="bg-black/50 p-4 rounded-lg border border-white/5 flex items-center gap-3">
+                                    <i class="ph ph-currency-jpy text-cyan text-xl"></i>
+                                    <span class="text-sm font-bold">高利益率維持</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- UI Paradigm: 3D Spatial Bento / Tools Showcase (Meso-Architecture) -->
+    <section id="features" class="relative py-32 z-10 bg-black/40 border-y border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-cyan font-display uppercase tracking-[0.3em] text-sm font-bold mb-4">Core Ecosystem</h2>
+                <h3 class="text-4xl md:text-6xl font-bold mb-6">三種の神器。<br>最強のAIツールチェーン。</h3>
+                <p class="text-slate-400 max-w-2xl mx-auto">用途に応じて最適なAIを選択し、シームレスに連携。これが圧倒的な品質と速度を生み出す秘密です。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+                <!-- Tool 1: Kling AI (High density visual card) -->
+                <div class="bento-card hover-target glass-panel md:col-span-2 rounded-3xl p-8 relative overflow-hidden group reveal">
+                    <div class="absolute right-0 top-0 w-1/2 h-full opacity-20 group-hover:opacity-40 transition-opacity duration-500 mask-image-linear-left">
+                        <img src="https://images.unsplash.com/photo-1677442135136-760c813028c0?auto=format&fit=crop&w=800&q=80" alt="Abstract Network" class="w-full h-full object-cover grayscale mix-blend-screen">
+                    </div>
+                    <div class="relative z-10 w-full md:w-2/3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-violet to-cyan rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="ph-bold ph-aperture text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-3xl font-bold mb-2 font-display text-white">Kling AI <span class="text-sm text-violet font-normal ml-2">Video Engine</span></h4>
+                        <p class="text-slate-300 mb-6 line-clamp-3">
+                            物理法則を理解した驚異的な映像生成AI。プロンプト一つで、シネマティックな実写風景から、複雑なアニメーションまで、視聴者を惹きつける高品質な映像素材を無限に生成します。
+                        </p>
+                        <ul class="space-y-2 text-sm text-slate-400 font-medium">
+                            <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-violet"></i> 最大1080pの高解像度出力</li>
+                            <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-violet"></i> 物理シミュレーション対応</li>
+                            <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-violet"></i> 一貫性のあるキャラクター生成</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tool 2: FLOVA -->
+                <div class="bento-card hover-target glass-panel rounded-3xl p-8 relative overflow-hidden group flex flex-col justify-between reveal" style="transition-delay: 100ms;">
+                    <div class="absolute inset-0 bg-gradient-to-b from-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div>
+                        <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 border border-white/20">
+                            <span class="font-display font-black text-cyan text-xl">F.</span>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2 font-display text-white">FLOVA</h4>
+                        <p class="text-slate-400 text-sm mb-6">
+                            企画・台本生成の中枢。Youtubeの最新アルゴリズムとトレンドを解析し、バズる構成案から一語一句のナレーション台本までを数秒で構築。
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/10 flex justify-between items-center text-xs font-display text-slate-500">
+                        <span>DATA PIPELINE</span>
+                        <i class="ph-bold ph-arrows-left-right"></i>
+                    </div>
+                </div>
+
+                <!-- Tool 3: Nano Banana Pro -->
+                <div class="bento-card hover-target glass-panel rounded-3xl p-8 relative overflow-hidden group reveal" style="transition-delay: 200ms;">
+                    <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-[#FFD700]/20 blur-3xl rounded-full"></div>
+                    <div>
+                        <div class="w-12 h-12 bg-[#FFD700]/10 rounded-xl flex items-center justify-center mb-6 border border-[#FFD700]/30 shadow-[0_0_15px_rgba(255,215,0,0.2)]">
+                            <i class="ph-fill ph-wave-sine text-[#FFD700] text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2 font-display text-white">Nano Banana Pro</h4>
+                        <p class="text-slate-400 text-sm mb-6">
+                            ハイエンド音声・FX統合環境。感情豊かなAIボイスによるナレーションと、映像のインパクトを倍増させるBGM・効果音を自動でミックスダウン。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Architecture Map (Spans full width down below) -->
+                <div class="bento-card hover-target glass-panel md:col-span-2 rounded-3xl p-8 relative overflow-hidden flex items-center justify-between group reveal" style="transition-delay: 300ms;">
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-white flex items-center gap-2">
+                            <i class="ph-fill ph-plugs-connected text-cyan"></i>
+                            Compound Architecture
+                        </h4>
+                        <p class="text-slate-400 text-sm">これらを連結する独自の自動化スクリプト。</p>
+                    </div>
+                    <div class="flex items-center gap-2 md:gap-4 flex-wrap justify-end">
+                        <div class="px-3 py-1.5 bg-black/50 rounded text-xs font-display border border-white/10">Input prompt</div>
+                        <i class="ph-bold ph-caret-right text-slate-600"></i>
+                        <div class="px-3 py-1.5 bg-cyan/10 text-cyan rounded text-xs font-display border border-cyan/20">FLOVA API</div>
+                        <i class="ph-bold ph-caret-right text-slate-600"></i>
+                        <div class="px-3 py-1.5 bg-violet/10 text-violet rounded text-xs font-display border border-violet/20">Kling Engine</div>
+                        <i class="ph-bold ph-caret-right text-slate-600"></i>
+                        <div class="px-3 py-1.5 bg-[#FFD700]/10 text-[#FFD700] rounded text-xs font-display border border-[#FFD700]/20">Auto-Edit</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Execution (Vertical Pipeline) -->
+    <section id="workflow" class="relative py-32 z-10">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">最短最速の実行プロセス。</h2>
+                <p class="text-slate-400">複雑な裏側とは裏腹に、ユーザーの操作は極限まで削ぎ落とされています。</p>
+            </div>
+
+            <div class="relative">
+                <!-- Vertical Line -->
+                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-cyan/50 via-violet/50 to-transparent transform md:-translate-x-1/2"></div>
+
+                <!-- Step 1 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between mb-16 md:mb-32 reveal">
+                    <div class="hidden md:block w-5/12 text-right pr-12">
+                        <h4 class="text-2xl font-bold text-white mb-2">01. プロンプト入力</h4>
+                        <p class="text-slate-400 text-sm">専用のテンプレートにカテゴリとキーワードを入力。わずか1行のテキストで十分です。</p>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-void border-2 border-cyan flex items-center justify-center shadow-[0_0_15px_#00F0FF] z-10">
+                        <div class="w-2 h-2 rounded-full bg-cyan"></div>
+                    </div>
+                    <div class="w-full pl-24 md:pl-0 md:w-5/12">
+                        <div class="glass-panel p-6 rounded-2xl border-white/5 shadow-2xl relative overflow-hidden hover-target bento-card">
+                            <div class="flex items-center gap-2 text-xs text-slate-500 font-display mb-3 border-b border-white/5 pb-2">
+                                <i class="ph-bold ph-terminal-window"></i> terminal_input
+                            </div>
+                            <code class="text-cyan text-sm block font-display">> Generate standard blueprint: "AI Tech History"</code>
+                            <code class="text-slate-400 text-sm block font-display mt-2">> Processing request...</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex flex-col md:flex-row-reverse items-center justify-between mb-16 md:mb-32 reveal">
+                    <div class="hidden md:block w-5/12 text-left pl-12">
+                        <h4 class="text-2xl font-bold text-white mb-2">02. AI自動生成 & 統合</h4>
+                        <p class="text-slate-400 text-sm">システムが全自動で稼働。台本作成、映像生成、音声合成がバックグラウンドで並列処理されます。</p>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-void border-2 border-violet flex items-center justify-center shadow-[0_0_15px_#8A2BE2] z-10">
+                        <div class="w-2 h-2 rounded-full bg-violet"></div>
+                    </div>
+                    <div class="w-full pl-24 md:pl-0 md:w-5/12 text-right">
+                        <div class="glass-panel p-6 rounded-2xl border-white/5 shadow-2xl relative hover-target bento-card overflow-hidden">
+                            <!-- Progress bars simulation -->
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-[10px] uppercase font-display text-slate-400 mb-1"><span>Scripting</span><span>100%</span></div>
+                                    <div class="h-1 bg-white/10 rounded-full overflow-hidden"><div class="w-full h-full bg-cyan"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-[10px] uppercase font-display text-slate-400 mb-1"><span>Video Render (Kling)</span><span>78%</span></div>
+                                    <div class="h-1 bg-white/10 rounded-full overflow-hidden"><div class="w-[78%] h-full bg-violet animate-pulse"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-[10px] uppercase font-display text-slate-400 mb-1"><span>Audio Mix (Banana)</span><span>Pending</span></div>
+                                    <div class="h-1 bg-white/10 rounded-full overflow-hidden"><div class="w-0 h-full bg-[#FFD700]"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile text duplication for reading flow -->
+                    <div class="md:hidden w-full pl-24 pr-4 mt-6">
+                         <h4 class="text-xl font-bold text-white mb-2">02. AI自動生成 & 統合</h4>
+                         <p class="text-slate-400 text-sm">システムが全自動で稼働。台本作成、映像生成、音声合成がバックグラウンド処理されます。</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between reveal">
+                    <div class="hidden md:block w-5/12 text-right pr-12">
+                        <h4 class="text-2xl font-bold text-white mb-2">03. 公開・収益化</h4>
+                        <p class="text-slate-400 text-sm">完成した高品質な動画をYoutubeへアップロード。圧倒的なクオリティで視聴維持率を高め、収益化基準を最速で突破します。</p>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-void border-2 border-green-500 flex items-center justify-center shadow-[0_0_15px_#22c55e] z-10">
+                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="w-full pl-24 md:pl-0 md:w-5/12">
+                        <div class="glass-panel p-6 rounded-2xl border-white/5 shadow-2xl relative hover-target bento-card text-center justify-center flex flex-col items-center">
+                            <i class="ph-fill ph-youtube-logo text-5xl text-crimson mb-4 drop-shadow-[0_0_15px_rgba(255,0,60,0.5)]"></i>
+                            <div class="text-3xl font-display font-bold text-white mb-1">¥196,500</div>
+                            <div class="text-[10px] uppercase font-display text-green-400 tracking-widest">+12.4% THIS MONTH</div>
+                        </div>
+                    </div>
+                     <!-- Mobile text duplication -->
+                     <div class="md:hidden w-full pl-24 pr-4 mt-6">
+                        <h4 class="text-xl font-bold text-white mb-2">03. 公開・収益化</h4>
+                        <p class="text-slate-400 text-sm">完成した動画をアップロード。視聴維持率を高め、収益化基準を最速突破。</p>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creator Profile (Brutalist / Editorial Vibe) -->
+    <section id="creator" class="relative py-32 z-10 bg-void border-y border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2000&q=80')] opacity-5 bg-cover bg-center mix-blend-screen"></div>
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Image -->
+                <div class="w-full lg:w-5/12 relative reveal">
+                    <div class="aspect-[3/4] relative rounded-lg overflow-hidden group">
+                        <div class="absolute inset-0 bg-cyan/10 mix-blend-overlay z-10"></div>
+                        <div class="absolute inset-0 bg-black/20 mix-blend-multiply z-10"></div>
+                        <div class="absolute inset-0" style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.03) 2px, rgba(0,240,255,0.03) 4px); pointer-events: none; z-index: 15;"></div>
+                        <img src="https://raw.githubusercontent.com/gdtop7310-stack/genlp/main/masayume_profile.png" alt="Masayume Portrait" class="w-full h-full object-cover filter grayscale contrast-125 brightness-90 transition-all duration-700 scale-105 group-hover:scale-100">
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-void to-transparent z-20">
+                            <h3 class="text-2xl font-bold text-white">Masayume</h3>
+                            <p class="text-cyan font-display text-sm tracking-wider">CHIEF AI ARCHITECT</p>
+                        </div>
+                    </div>
+                    <!-- decorative frame -->
+                    <div class="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-cyan/50 z-0"></div>
+                    <div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-cyan/50 z-0"></div>
+                </div>
+
+                <!-- Text -->
+                <div class="w-full lg:w-7/12 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8">「労働」から解放され、<br>「創造」の指揮者となれ。</h2>
+                    <div class="space-y-6 text-slate-300 text-lg font-light leading-relaxed">
+                        <p>
+                            かつて、YouTubeで成功するためには血の滲むような編集作業とカリスマ性が必要でした。しかし、ジェネレーティブAIの進化は、そのゲームのルールを根底から破壊しました。
+                        </p>
+                        <p>
+                            私が構築したこのアーキテクチャは、単なる「ツール紹介」ではありません。再現性を極限まで高めた収益化のシステム構造です。美しく、かつ戦略的に設計されたプロンプトとツール群の連携により、あなたはディレクターとして指示を出すだけで、高品質なコンテンツを量産できます。
+                        </p>
+                        <p class="text-white font-bold border-l-2 border-cyan pl-4">
+                            テクノロジーを恐れるのではなく、テクノロジーを使いこなす側に回る決断を。
+                        </p>
+                    </div>
+
+                    <div class="mt-10 flex gap-6 items-center">
+                        <div class="flex flex-col">
+                            <span class="text-4xl font-display font-bold text-white">40+</span>
+                            <span class="text-xs text-slate-500 uppercase tracking-widest">Managed Channels</span>
+                        </div>
+                        <div class="w-[1px] h-10 bg-white/10"></div>
+                        <div class="flex flex-col">
+                            <span class="text-4xl font-display font-bold text-white">1.2M</span>
+                            <span class="text-xs text-slate-500 uppercase tracking-widest">Total Subscribers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion (Javascript powered for smooth height) -->
+    <section class="relative py-32 z-10">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">System FAQs</h2>
+                <div class="w-12 h-1 bg-cyan mx-auto"></div>
+            </div>
+
+            <div class="space-y-4 reveal">
+                <!-- FAQ Item 1 -->
+                <div class="glass-panel rounded-xl overflow-hidden faq-item border border-white/5 transition-colors hover:border-white/20">
+                    <button class="w-full flex items-center justify-between p-6 text-left hover-target focus:outline-none">
+                        <span class="text-lg font-bold text-white">完全に未経験ですが実践可能ですか？</span>
+                        <i class="ph-bold ph-plus text-cyan transition-transform duration-300 icon"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-slate-400 hidden content text-sm leading-relaxed">
+                        はい、可能です。動画編集ソフトの使い方をゼロから覚える必要はありません。提供するワークフローに従い、AIへ正しい指示（プロンプト）を出す方法を学ぶことだけに集中できます。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="glass-panel rounded-xl overflow-hidden faq-item border border-white/5 transition-colors hover:border-white/20">
+                    <button class="w-full flex items-center justify-between p-6 text-left hover-target focus:outline-none">
+                        <span class="text-lg font-bold text-white">AIツールの利用料金は毎月いくらかかりますか？</span>
+                        <i class="ph-bold ph-plus text-cyan transition-transform duration-300 icon"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-slate-400 hidden content text-sm leading-relaxed">
+                        推奨するツール構成（Kling, FLOVA等）の有料プランを契約した場合、月に約5,000円〜15,000円程度のランニングコストが発生します。しかし、これは高品質な動画を無制限レベルで生成するための必要経費であり、外注費（1本数千円〜数万円）と比較すると圧倒的に低コストです。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="glass-panel rounded-xl overflow-hidden faq-item border border-white/5 transition-colors hover:border-white/20">
+                    <button class="w-full flex items-center justify-between p-6 text-left hover-target focus:outline-none">
+                        <span class="text-lg font-bold text-white">AI生成動画でYouTubeの収益化は通りますか？</span>
+                        <i class="ph-bold ph-plus text-cyan transition-transform duration-300 icon"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-slate-400 hidden content text-sm leading-relaxed">
+                        「繰り返しの多いコンテンツ」に判定されないための独自ノウハウが含まれています。ナレーションの抑揚調整、映像のダイナミクス、構成の工夫により、システム稼働中の多くのアカウントが問題なく収益化を通過・維持しています。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Transformation CTA (Macro-Architecture Bottom Fix) -->
+    <section id="contact" class="relative py-40 z-10 border-t border-white/10 overflow-hidden">
+        <!-- Intense background effects -->
+        <div class="absolute inset-0 bg-gradient-to-b from-void to-[#0a0515]"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-[500px] bg-violet/20 blur-[120px] rounded-full pointer-events-none mix-blend-screen"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-cyan/30 blur-[100px] rounded-full pointer-events-none mix-blend-screen animate-pulse-glow"></div>
+        <div class="bg-grid absolute inset-0 opacity-30"></div>
+
+        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet/50 bg-violet/10 mb-8 backdrop-blur reveal">
+                <i class="ph-fill ph-check-verified text-violet"></i>
+                <span class="text-sm font-bold text-white font-display uppercase tracking-widest">Limited Intake</span>
+            </div>
+
+            <h2 class="text-5xl md:text-7xl font-bold mb-6 tracking-tighter reveal" style="transition-delay: 100ms;">
+                次世代の<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan to-violet text-glow">特権階級</span>へ。
+            </h2>
+
+            <p class="text-xl text-slate-300 mb-12 max-w-2xl font-light leading-relaxed reveal" style="transition-delay: 200ms;">
+                AIの波は、待つ者を飲み込み、乗る者を高みへ押し上げます。<br>
+                完全非公開の個別アーキテクチャ設計相談会で、あなたのロードマップを構築しましょう。
+            </p>
+
+            <a href="https://utage-system.com/event/VDIkmJHPe0fO/register" target="_blank" class="hover-target w-full max-w-md py-5 px-8 rounded-lg bg-white text-void font-bold text-lg hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] transition-all duration-300 relative overflow-hidden group reveal" style="transition-delay: 300ms;">
+                <div class="absolute inset-0 bg-gradient-to-r from-cyan via-white to-violet opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <span class="relative z-10 flex items-center justify-center gap-2 group-hover:text-void transition-colors">
+                    無料コンサルティングを予約
+                    <i class="ph-bold ph-arrow-right"></i>
+                </span>
+            </a>
+
+            <p class="text-[10px] text-center text-slate-500 mt-4 reveal" style="transition-delay: 400ms;">※毎月先着10名様限定。強引な勧誘は一切行いません。</p>
+        </div>
+    </section>
+
+    <!-- Minimalist Footer -->
+    <footer class="relative z-10 border-t border-white/5 bg-void py-12">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-xl font-display font-bold flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
+                <i class="ph-fill ph-infinity text-cyan"></i>
+                Masayume AI
+            </div>
+
+            <div class="flex gap-6 text-sm text-slate-500 font-display">
+                <a href="#" class="hover:text-cyan hover-target transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-cyan hover-target transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-cyan hover-target transition-colors">Company</a>
+            </div>
+
+            <div class="text-slate-600 text-xs font-display">
+                &copy; 2026 Masayume AI. All operations automated.
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Chat Widget -->
+    <div id="masayume-chat-widget">
+      <div id="chat-toggle" onclick="toggleChat()" style="position:fixed;bottom:20px;right:20px;width:60px;height:60px;background:linear-gradient(135deg,#00F0FF 0%,#8A2BE2 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 15px rgba(0,240,255,0.4);z-index:9999;transition:transform 0.3s;">
+        <svg width="28" height="28" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      </div>
+      <div id="chat-window" style="display:none;position:fixed;bottom:90px;right:20px;width:380px;height:520px;background:#030509;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.5);z-index:9999;overflow:hidden;border:1px solid rgba(0,240,255,0.2);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+        <div style="background:linear-gradient(135deg,#00F0FF 0%,#8A2BE2 100%);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;">🤖</div>
+            <div>
+              <div style="color:white;font-weight:600;font-size:14px;">Masayume AI</div>
+              <div style="color:rgba(255,255,255,0.7);font-size:11px;">オンライン</div>
+            </div>
+          </div>
+          <span onclick="toggleChat()" style="color:white;cursor:pointer;font-size:20px;padding:4px;">✕</span>
+        </div>
+        <div id="chat-messages" style="height:380px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
+          <div style="background:rgba(0,240,255,0.15);border-radius:12px;padding:12px 16px;max-width:85%;color:#e0e0e0;font-size:13px;line-height:1.6;">
+            こんにちは！👋 AI動画コンサルについて気になることがあれば、何でもお気軽に質問してください！
+          </div>
+        </div>
+        <div style="padding:12px 16px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px;">
+          <input id="chat-input" type="text" placeholder="メッセージを入力..." onkeypress="if(event.key==='Enter')sendMessage()" style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:10px 16px;color:white;font-size:13px;outline:none;">
+          <button onclick="sendMessage()" style="background:linear-gradient(135deg,#00F0FF,#8A2BE2);border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+            <svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Custom Cursor Logic
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let ringX = 0;
+        let ringY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
+        });
+
+        // Smooth follow for ring
+        function animateCursor() {
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Intersection Observer for Reveal Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+
+                    // Trigger counters if they exist in this targeted section
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        if (!counter.classList.contains('counted')) {
+                            const target = +counter.getAttribute('data-target');
+                            const duration = 2000; // ms
+                            const step = target / (duration / 16); // 60fps
+                            let current = 0;
+
+                            const updateCounter = () => {
+                                current += step;
+                                if (current < target) {
+                                    counter.innerText = Math.ceil(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.innerText = target;
+                                }
+                            };
+                            updateCounter();
+                            counter.classList.add('counted');
+                        }
+                    });
+
+                    // observer.unobserve(entry.target); // Optional: stop observing once revealed
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item button');
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const content = item.nextElementSibling;
+                const icon = item.querySelector('.icon');
+
+                // Toggle current
+                content.classList.toggle('hidden');
+
+                if (content.classList.contains('hidden')) {
+                    icon.classList.remove('ph-minus');
+                    icon.classList.add('ph-plus');
+                } else {
+                    icon.classList.remove('ph-plus');
+                    icon.classList.add('ph-minus');
+                }
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow-[0_4px_30px_rgba(0,240,255,0.05)]');
+                navbar.classList.remove('py-0');
+            } else {
+                navbar.classList.remove('py-2', 'shadow-[0_4px_30px_rgba(0,240,255,0.05)]');
+                navbar.classList.add('py-0');
+            }
+        });
+
+        // Chat Widget Functions
+        const WEBHOOK_URL = 'https://masayume.app.n8n.cloud/webhook/masayume-chat';
+        let sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+        let conversationHistory = [];
+
+        function toggleChat() {
+          const w = document.getElementById('chat-window');
+          w.style.display = w.style.display === 'none' ? 'flex' : 'none';
+          w.style.flexDirection = 'column';
+        }
+
+        async function sendMessage() {
+          const input = document.getElementById('chat-input');
+          const msg = input.value.trim();
+          if (!msg) return;
+          input.value = '';
+
+          const messages = document.getElementById('chat-messages');
+          messages.innerHTML += `<div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:12px 16px;max-width:85%;align-self:flex-end;color:white;font-size:13px;">${msg}</div>`;
+
+          const loading = document.createElement('div');
+          loading.style.cssText = 'background:rgba(0,240,255,0.15);border-radius:12px;padding:12px 16px;max-width:85%;color:#e0e0e0;font-size:13px;';
+          loading.textContent = '入力中...';
+          messages.appendChild(loading);
+          messages.scrollTop = messages.scrollHeight;
+
+          conversationHistory.push({ role: 'user', content: msg });
+
+          try {
+            const res = await fetch(WEBHOOK_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: msg, sessionId, conversation_history: conversationHistory })
+            });
+            const data = await res.json();
+            const reply = data.reply || data.content?.[0]?.text || 'すみません、エラーが発生しました。';
+            conversationHistory.push({ role: 'assistant', content: reply });
+            loading.innerHTML = reply.replace(/\n/g, '<br>');
+          } catch (e) {
+            loading.textContent = 'すみません、接続エラーが発生しました。';
+          }
+          messages.scrollTop = messages.scrollHeight;
+        }
+    </script>
 </body>
 </html>
